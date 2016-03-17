@@ -25,9 +25,9 @@ public class RunRoller extends Command {
 	// Called repeatedly when this Command is scheduled to run  
 	protected void execute() {
 		if (OI.otherStick.getRawAxis(OI.Axis.RY.getAxisNumber())>0.6) {
-			roller.roller.set(0.35);
+			roller.roller.set(0.20);
 		} else if (OI.otherStick.getRawAxis(OI.Axis.RY.getAxisNumber())<-0.6) {
-			roller.roller.set(-0.55);
+			roller.roller.set(-1);
 		} else {
 	    	roller.roller.set(0);
 		}

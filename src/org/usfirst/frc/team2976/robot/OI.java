@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team2976.robot.commands.AutoRaisePortcullis;
+//import org.usfirst.frc.team2976.robot.commands.AutoRaisePortcullis;
 import org.usfirst.frc.team2976.robot.commands.DriveStraight;
 import org.usfirst.frc.team2976.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2976.robot.commands.RaiseBackArm;
@@ -19,7 +19,7 @@ import org.usfirst.frc.team2976.robot.commands.RunRoller;
  */
 public class OI {
 
-	public static final DriveStraight driveStraight = new DriveStraight();
+	//public static final DriveStraight driveStraight = new DriveStraight();
 	
 	public enum Button {
 		RBumper(6), LBumper(5), A(1), B(2), X(3), Y(4), RightJoystickBtn(10), LeftJoystickBtn(9);
@@ -48,7 +48,7 @@ public class OI {
 	}
 	
 	public OI()	{
-		(new JoystickButton(OI.driveStick, Button.RBumper.getBtnNumber())).whileHeld(driveStraight); //Start the DriveStraight Command when held
+		//(new JoystickButton(OI.driveStick, Button.RBumper.getBtnNumber())).whileHeld(driveStraight); //Start the DriveStraight Command when held
 	}
 	
 	public static XBoxController driveStick = new XBoxController(0);

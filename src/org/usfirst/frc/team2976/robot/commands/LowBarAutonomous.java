@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LowBarAutonomous extends CommandGroup {
     public LowBarAutonomous() {
-     addSequential(new AutoDriveStraight(0.5, 1.0));
-     addSequential(new AutoTurn(0.5, 0.5));
-     addSequential(new AutoDriveStraight(0.5, 1.0));
-     addSequential(new AutoRunRoller(1));    
+     addSequential(new AutoDriveStraight(0.9, 3));   
     }
 }

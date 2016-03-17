@@ -5,17 +5,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import org.usfirst.frc.team2976.robot.commands.ArmDynamicSetpointPID;
-import org.usfirst.frc.team2976.robot.commands.DriveBOT;
-import org.usfirst.frc.team2976.robot.commands.LowBarAutonomous;
-import org.usfirst.frc.team2976.robot.commands.RaiseBackArm;
-import org.usfirst.frc.team2976.robot.commands.RaiseHook;
-import org.usfirst.frc.team2976.robot.commands.RaiseRobot;
-import org.usfirst.frc.team2976.robot.subsystems.Camera;
-import org.usfirst.frc.team2976.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2976.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team2976.robot.subsystems.Roller;
-import org.usfirst.frc.team2976.robot.commands.RunRoller;
+import org.usfirst.frc.team2976.robot.commands.*;
+import org.usfirst.frc.team2976.robot.subsystems.*;
+
 /**
  * @author NeilHazra 
  * @author JasmineCheng
@@ -29,16 +21,17 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static final ArmDynamicSetpointPID armPID = new ArmDynamicSetpointPID();
 	public static final DriveBOT DriveBot = new DriveBOT();
-	
-	//FIXME put this in OI with button commands if anyone has an extra hour
 	public static final RunRoller runRoller = new RunRoller();
-	public static final RaiseRobot raiseRobot = new RaiseRobot();
 	public static final RaiseHook raiseHook = new RaiseHook();
+	public static final RaiseRobot raiseRobot = new RaiseRobot();
 	public static final RaiseBackArm raiseBackArm = new RaiseBackArm();
+	public static final startCompressor startCompressor = new startCompressor();
+	//public static final VelocityArm velocityArm = new VelocityArm();
 	
-	public static Camera camera;
 	
-	SendableChooser chooser;
+	//public static final ArmSwitchNotifier armSwitch = new ArmSwitchNotifier();
+	//FIXME put this in OI with button commands if anyone has an extra hour
+
 	SendableChooser autoChooser;
 	
 	public static OI oi;
@@ -55,18 +48,14 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		oi = new OI();
-		chooser = new SendableChooser();
-		camera = new Camera("cam0");
-		
-		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Low Bar Autonomous", new LowBarAutonomous());
+		drivetrain = new DriveTrain();
 	}
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
 	public void autonomousInit() {
 		// schedule the autonomous command (example)
-		autonomousCommand = (Command)autoChooser.getSelected();
+		autonomousCommand = new LowBarAutonomous();
         if(autonomousCommand != null) autonomousCommand.start();
 	}
 	/**
@@ -78,12 +67,15 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		armPID.start();
-		runRoller.start();
-		DriveBot.start();
-		raiseHook.start();
-		raiseRobot.start();
-		raiseBackArm.start();
+		startCompressor.start(); //Starts the Compressor
+		armPID.start(); //moves the arm
+		runRoller.start();//Runs the roller
+		DriveBot.start(); //Drive Code
+		raiseHook.start(); //works
+		raiseRobot.start(); //works
+		raiseBackArm.start(); //works		
+		
+		//armSwitch.start(); //Test not done yet
 	}
 	/**
 	 * This function is called when the disabled button is hit. You can use it

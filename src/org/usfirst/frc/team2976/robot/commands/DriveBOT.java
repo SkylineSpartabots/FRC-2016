@@ -9,43 +9,60 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import org.usfirst.frc.team2976.robot.Robot;
 
 /**
- *@author Jasmine Cheng
+ * @author Jasmine Cheng
+ * @author NeilHazra
  */
 public class DriveBOT extends Command {
 	public static DriveTrain drivetrain = new DriveTrain();
-    
+	
+	public static LeftDriveEncoder driveEncoder = new LeftDriveEncoder();
+	
+	boolean isbraked = false;
+
 	public DriveBOT() {
-        // Use requires() here to declare subsystem dependencies
-        requires(drivetrain);
-    }
+		// Use requires() here to declare subsystem dependencies
+		requires(drivetrain);
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		double joystick_value = OI.driveStick.getLY();
+		if (Math.abs(joystick_value) < 0.2) {
+			joystick_value = 0;
+		}
+		if (OI.driveStick.getRawButton(OI.Button.A.getBtnNumber()) && !isbraked) {
+			DriveTrain.leftBackMotor.enableBrakeMode(true);
+			DriveTrain.rightBackMotor.enableBrakeMode(true);
+			DriveTrain.leftFrontMotor.enableBrakeMode(true);
+			DriveTrain.rightFrontMotor.enableBrakeMode(true);
+		}
+		if (!OI.driveStick.getRawButton(OI.Button.A.getBtnNumber())) {
+			if (isbraked) {
+				DriveTrain.leftBackMotor.enableBrakeMode(false);
+				DriveTrain.rightBackMotor.enableBrakeMode(false);
+				DriveTrain.leftFrontMotor.enableBrakeMode(false);
+				DriveTrain.rightFrontMotor.enableBrakeMode(false);
+			} else {
+				DriveTrain.m_drive.arcadeDrive(-joystick_value, -OI.driveStick.getRX(), true);
+			}
+		}
+		SmartDashboard.putNumber("DriveEncoder", driveEncoder.motor1position);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	//drivetrain.m_drive.arcadeDrive(OI.LeftJoyStick);
-    	double x = OI.driveStick.getLY();
-    	if(Math.abs(x)<0.2)	{
-    		x=0;
-    	}
-    	DriveTrain.m_drive.arcadeDrive(-x, -OI.driveStick.getRX(),true);
-    	SmartDashboard.putNumber("Throttle", OI.driveStick.getLY());
-    	//Reverse to compensate for mixed axis
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
 
-    // Called once after isFinished returns true 
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

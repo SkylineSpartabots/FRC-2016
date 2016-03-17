@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2976.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2976.robot.OI;
 import org.usfirst.frc.team2976.robot.subsystems.RaiseRobotMotor;
@@ -22,8 +23,8 @@ public class RaiseRobot extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(OI.otherStick.getRawButton(OI.Button.RBumper.getBtnNumber()))	{
-        	raiseRobotMotor.liftingMotorA.set(-1);
-        	raiseRobotMotor.liftingMotorB.set(-1);
+        	raiseRobotMotor.liftingMotorA.set(-0.5);
+        	raiseRobotMotor.liftingMotorB.set(-0.5);
     	} else if(OI.otherStick.getRawButton(OI.Button.LBumper.getBtnNumber()))	{
         	raiseRobotMotor.liftingMotorA.set(1);
         	raiseRobotMotor.liftingMotorB.set(1);
@@ -33,6 +34,9 @@ public class RaiseRobot extends Command {
         	raiseRobotMotor.liftingMotorA.enableBrakeMode(true);
         	raiseRobotMotor.liftingMotorB.enableBrakeMode(true);
     	}
+    	SmartDashboard.putNumber("LiftAmpsA", raiseRobotMotor.liftingMotorA.getOutputCurrent());
+    	SmartDashboard.putNumber("LiftAmpsB", raiseRobotMotor.liftingMotorB.getOutputCurrent());
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

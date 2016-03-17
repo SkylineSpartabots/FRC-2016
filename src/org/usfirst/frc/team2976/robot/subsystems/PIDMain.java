@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2976.robot.subsystems;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * PID Controller Object
  * <p> Starts a runnable class PIDCompute that executes the PID algorithm 
@@ -93,10 +95,14 @@ public class PIDMain {
 		integral = 0;
 		derivative = 0;
 	}
+	
+	int i = 0;
 	private class PIDCompute extends TimerTask	{
 		public void run()	{  
 			if(!enabled) {
 				output = 0;
+				SmartDashboard.putNumber("@PIDCOMPUTE EnabledCheck", (int)i);
+				i++;
 				return;	
 			}
 			    

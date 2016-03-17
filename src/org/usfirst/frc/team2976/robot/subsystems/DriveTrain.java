@@ -14,11 +14,19 @@ public class DriveTrain extends Subsystem {
 	public static CANTalon rightBackMotor = new CANTalon(RobotMap.RightBackDriveMotor); //Talon Object
 	public static CANTalon leftBackMotor = new CANTalon(RobotMap.LeftBackDriveMotor);	 //Talon Object
 	
-	public static TankDrivePlus m_drive = new TankDrivePlus(leftBackMotor, leftFrontMotor,rightBackMotor, rightBackMotor); //Robot Drive Class
+	public static TankDrivePlus m_drive = new TankDrivePlus(leftBackMotor, leftFrontMotor,rightBackMotor, rightFrontMotor); //Robot Drive Class
 	
 	public void initDefaultCommand() {
 	}	
 	
+	public void setLeft(double speed)	{
+		leftBackMotor.set(speed);
+		leftFrontMotor.set(speed);
+	}
+	public void setRight(double speed)	{
+		rightBackMotor.set(-speed);
+		rightFrontMotor.set(-speed);
+	}
 	public static void setZero(){
 		rightFrontMotor.set(0);
 		leftFrontMotor.set(0);

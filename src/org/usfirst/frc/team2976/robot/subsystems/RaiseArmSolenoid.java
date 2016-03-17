@@ -5,13 +5,14 @@ import org.usfirst.frc.team2976.robot.RobotMap;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  *
  */
 public class RaiseArmSolenoid extends Subsystem {
 	
-    public Solenoid raiseHookMechanism = new Solenoid(RobotMap.RaiseHookSolenoid);
+    public DoubleSolenoid raiseHookMechanism = new DoubleSolenoid(RobotMap.RaiseHookSolenoid1,RobotMap.RaiseHookSolenoid2);
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

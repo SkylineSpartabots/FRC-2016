@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
  *@author NeilHazra
  */
 public class ArmLimitSwitches extends Subsystem {
-    public DigitalInput high_switch = new DigitalInput(RobotMap.ArmSwitch);
+    public static DigitalInput high_switch = new DigitalInput(RobotMap.ArmSwitch);
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
