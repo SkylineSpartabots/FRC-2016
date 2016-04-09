@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
 	
 	public static DriveTrain drivetrain;
 	public static Roller roller;
+	public static ArmMotors armMotors;
 	
 	// Btn Commands are started in the OI constructor
 	
@@ -48,6 +49,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		oi = new OI();
+		armMotors = new ArmMotors();
 		drivetrain = new DriveTrain();
 	}
 	public void disabledPeriodic() {

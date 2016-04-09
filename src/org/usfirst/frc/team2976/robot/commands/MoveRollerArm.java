@@ -1,18 +1,14 @@
 package org.usfirst.frc.team2976.robot.commands;
 
 import org.usfirst.frc.team2976.robot.OI;
+import org.usfirst.frc.team2976.robot.Robot;
 import org.usfirst.frc.team2976.robot.subsystems.ArmMotors;
 import org.usfirst.frc.team2976.robot.subsystems.LeftEncoderPIDSource;
 import org.usfirst.frc.team2976.robot.subsystems.PIDMain;
 import org.usfirst.frc.team2976.robot.subsystems.RightEncoderPIDSource;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * @author NeilHazra
@@ -36,7 +32,8 @@ public class ArmDynamicSetpointPID extends Command {
 	double max = 0.33;/// ARM_SPEED_REDUCER;
 
 	final int centerValue = 0; // Place Holding Variable
-	public static ArmMotors armMotors = new ArmMotors();
+	//public static ArmMotors armMotors = new ArmMotors();
+	
 	public static LeftEncoderPIDSource leftEncoderPIDSource = new LeftEncoderPIDSource();
 	public static RightEncoderPIDSource rightEncoderPIDSource = new RightEncoderPIDSource();
 	// public static ArmLimitSwitches armSwitch = new ArmLimitSwitches();
@@ -44,7 +41,7 @@ public class ArmDynamicSetpointPID extends Command {
 	public PIDMain rightArmDynamicPID = new PIDMain(rightEncoderPIDSource, centerValue, sampleTime, kp, ki, kd);
 
 	public ArmDynamicSetpointPID() {
-		requires(armMotors);
+		requires(Robot.armMotors);
 	}
 
 	// Called just before this Command runs the first time
@@ -62,10 +59,8 @@ public class ArmDynamicSetpointPID extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		x = -OI.otherStick.getRawAxis(OI.Axis.LY.getAxisNumber()) / 3;
-
-			ArmMotors.leftArm.set(x);
-			ArmMotors.rightArm.set(-x);
-		
+		Robot.armMotors.leftArm.set(x);
+		Robot.armMotors.rightArm.set(-x);
 	}
 
 	protected boolean isFinished() {
