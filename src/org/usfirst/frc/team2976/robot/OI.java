@@ -1,58 +1,36 @@
 package org.usfirst.frc.team2976.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-//import org.usfirst.frc.team2976.robot.commands.AutoRaisePortcullis;
-import org.usfirst.frc.team2976.robot.commands.DriveStraight;
-import org.usfirst.frc.team2976.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2976.robot.commands.RaiseBackArm;
-import org.usfirst.frc.team2976.robot.commands.RaiseHook;
-import org.usfirst.frc.team2976.robot.commands.RaiseRobot;
-import org.usfirst.frc.team2976.robot.commands.RunRoller;
+import org.usfirst.frc.team2976.robot.commands.MoveArm;
+import org.usfirst.frc.team2976.robot.utilities.XBoxController;
 
 /**
- * @author NeilHazra
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-
-	//public static final DriveStraight driveStraight = new DriveStraight();
+	XBoxController m_driveStick;
+	XBoxController m_secondaryStick;
 	
-	public enum Button {
-		RBumper(6), LBumper(5), A(1), B(2), X(3), Y(4), RightJoystickBtn(10), LeftJoystickBtn(9);
+	public OI(){
+		m_driveStick = new XBoxController(0);
+		m_secondaryStick = new XBoxController(1);
+		
 
-		private final int number;
-
-		Button(int number) {
-			this.number = number;
-		}
-
-		public int getBtnNumber() {
-			return number;
-		}
-	}
-	public enum Axis {
-		LX(0), LY(1), LTrigger(2), RTrigger(3), RX(4), RY(5);
-		private final int number;
-
-		Axis(int number) {
-			this.number = number;
-		}
-
-		public int getAxisNumber() {
-			return number;
-		}
+		Button a = new JoystickButton (getDriveStick(), 1);
+		Button b = new JoystickButton (getDriveStick(), 2);
+		
+		a.whileHeld(new MoveArm(true));
+		b.whileHeld(new MoveArm(false));
 	}
 	
-	public OI()	{
-		//(new JoystickButton(OI.driveStick, Button.RBumper.getBtnNumber())).whileHeld(driveStraight); //Start the DriveStraight Command when held
+	public XBoxController getDriveStick(){
+		return m_driveStick;
 	}
 	
-	public static XBoxController driveStick = new XBoxController(0);
-	public static XBoxController otherStick = new XBoxController(1);
+	
 	
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
@@ -80,9 +58,5 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	
-	 public Joystick getJoystick() {
-	        return driveStick;
-	    }
 }
 

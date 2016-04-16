@@ -1,49 +1,54 @@
+
 package org.usfirst.frc.team2976.robot.subsystems;
 
 import org.usfirst.frc.team2976.robot.RobotMap;
+import org.usfirst.frc.team2976.robot.utilities.XBoxController;
+
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon;
-import org.usfirst.frc.team2976.robot.override.TankDrivePlus;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *@author NeilHazra
+ *
  */
-public class DriveTrain extends Subsystem {	
-	public static CANTalon rightFrontMotor = new CANTalon(RobotMap.RightFrontDriveMotor); //Talon Object
-	public static CANTalon leftFrontMotor = new CANTalon(RobotMap.LeftFrontDriveMotor);	 //Talon Object
-	public static CANTalon rightBackMotor = new CANTalon(RobotMap.RightBackDriveMotor); //Talon Object
-	public static CANTalon leftBackMotor = new CANTalon(RobotMap.LeftBackDriveMotor);	 //Talon Object
+public class DriveTrain extends Subsystem {
 	
-	public static TankDrivePlus m_drive = new TankDrivePlus(leftBackMotor, leftFrontMotor,rightBackMotor, rightFrontMotor); //Robot Drive Class
+	CANTalon m_rightFrontMotor;  
+	CANTalon m_leftFrontMotor; 
+	CANTalon m_rightBackMotor;
+	CANTalon m_leftBackMotor;
+ 
+	AnalogGyro m_gyro;
 	
-	public void initDefaultCommand() {
-	}	
-	
-	public void setLeft(double speed)	{
-		leftBackMotor.set(speed);
-		leftFrontMotor.set(speed);
-	}
-	public void setRight(double speed)	{
-		rightBackMotor.set(-speed);
-		rightFrontMotor.set(-speed);
-	}
-	public static void setZero(){
-		rightFrontMotor.set(0);
-		leftFrontMotor.set(0);
-		rightBackMotor.set(0);
-		leftBackMotor.set(0);
-	}
-	public static void Break()	{
-		DriveTrain.leftBackMotor.enableBrakeMode(true);
-		DriveTrain.leftFrontMotor.enableBrakeMode(true);
-		DriveTrain.rightBackMotor.enableBrakeMode(true);
-		DriveTrain.rightFrontMotor.enableBrakeMode(true);
-	}
-	public static void releaseBreak()	{
-		DriveTrain.leftBackMotor.enableBrakeMode(false);
-		DriveTrain.leftFrontMotor.enableBrakeMode(false);
-		DriveTrain.rightBackMotor.enableBrakeMode(false);
-		DriveTrain.rightFrontMotor.enableBrakeMode(false);
-	}
+	RobotDrive m_drive;
 
+	public DriveTrain(){
+		m_rightFrontMotor = new CANTalon(RobotMap.RightFrontDriveMotor);
+		m_leftFrontMotor = new CANTalon(RobotMap.LeftFrontDriveMotor);
+		m_rightBackMotor = new CANTalon(RobotMap.RightBackDriveMotor);
+		m_leftBackMotor = new CANTalon(RobotMap.LeftBackDriveMotor);
+		
+		m_gyro = new AnalogGyro(RobotMap.GyroInput);
+		
+		m_drive = new RobotDrive(m_leftFrontMotor, m_leftBackMotor,
+				m_rightFrontMotor, m_rightBackMotor);
+	}
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new MySpecialCommand());
+    }
+    
+    public void resetDirection(){
+    	m_gyro.reset();
+    }
+    
+    public double getDirection(){
+    	return m_gyro.getAngle();
+    }
+    
+    public void arcadeDrive (XBoxController joy){
+    	
+    }
 }
+
