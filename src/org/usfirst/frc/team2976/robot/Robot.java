@@ -18,16 +18,14 @@ import org.usfirst.frc.team2976.robot.subsystems.*;
  *         manifest file in the resource directory.
  */
 public class Robot extends IterativeRobot {
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static final ArmDynamicSetpointPID armPID = new ArmDynamicSetpointPID();
-	public static final DriveBOT DriveBot = new DriveBOT();
-	public static final RunRoller runRoller = new RunRoller();
-	public static final RaiseHook raiseHook = new RaiseHook();
-	public static final RaiseRobot raiseRobot = new RaiseRobot();
-	public static final RaiseBackArm raiseBackArm = new RaiseBackArm();
-	public static final startCompressor startCompressor = new startCompressor();
-	//public static final VelocityArm velocityArm = new VelocityArm();
-	
+	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	//public static final ArmDynamicSetpointPID armPID = new ArmDynamicSetpointPID();
+	//public static final DriveBOT DriveBot = new DriveBOT();
+	//public static final RunRoller runRoller = new RunRoller();
+	//public static final RaiseHook raiseHook = new RaiseHook();
+	//public static RaiseRobot raiseRobot; 
+	//public static RaiseBackArm raiseBackArm;
+	//public static startCompressor startCompressor;
 	
 	//public static final ArmSwitchNotifier armSwitch = new ArmSwitchNotifier();
 	//FIXME put this in OI with button commands if anyone has an extra hour
@@ -37,8 +35,9 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	public static DriveTrain drivetrain;
-	public static Roller roller;
-	public static ArmMotors armMotors;
+	public static RollerArm rollerArm;
+	public static Climber climber;
+	public static AirCompressor compressor;
 	
 	// Btn Commands are started in the OI constructor
 	
@@ -49,15 +48,23 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		oi = new OI();
-		armMotors = new ArmMotors();
 		drivetrain = new DriveTrain();
+		rollerArm = new RollerArm();
+		compressor = new AirCompressor();
+		climber = new Climber();
+		//Commands
+		
 	}
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
 	public void autonomousInit() {
 		// schedule the autonomous command (example)
-		autonomousCommand = new LowBarAutonomous();
+		autoChooser.addDefault("ArmUpAutonomous", new ArmUpAutonomous());
+		autoChooser.addObject("LowBarAutonomous", new LowBarAutonomous());
+		autoChooser.addObject("NoAutonomous", new NoAuto());
+		autonomousCommand = (Command) autoChooser.getSelected();
+		
         if(autonomousCommand != null) autonomousCommand.start();
 	}
 	/**
@@ -69,13 +76,13 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		startCompressor.start(); //Starts the Compressor
-		armPID.start(); //moves the arm
-		runRoller.start();//Runs the roller
-		DriveBot.start(); //Drive Code
-		raiseHook.start(); //works
-		raiseRobot.start(); //works
-		raiseBackArm.start(); //works		
+		//startCompressor.start(); //Starts the Compressor
+		//armPID.start(); //moves the arm
+		//runRoller.start();//Runs the roller
+		//DriveBot.start(); //Drive Code
+		//raiseHook.start(); //works
+		//raiseRobot.start(); //works
+		//raiseBackArm.start(); //works		
 		
 		//armSwitch.start(); //Test not done yet
 	}

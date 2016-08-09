@@ -1,25 +1,22 @@
 package org.usfirst.frc.team2976.robot.commands;
 
-import org.usfirst.frc.team2976.robot.subsystems.myCompressor;
-
+import org.usfirst.frc.team2976.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *@author NeilHazra
  */
-public class startCompressor extends Command {
-	myCompressor compressor = new myCompressor();
-    
+public class startCompressor extends Command {    
 	public startCompressor() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-		requires(compressor);
+		requires(Robot.compressor);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	//compressor.c_compress.clearAllPCMStickyFaults();
-    	compressor.c_compress.setClosedLoopControl(true);
+    	Robot.compressor.c_compress.setClosedLoopControl(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -34,7 +31,7 @@ public class startCompressor extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	compressor.c_compress.setClosedLoopControl(false);
+    	Robot.compressor.c_compress.setClosedLoopControl(false);
     }
 
     // Called when another command which requires one or more of the same

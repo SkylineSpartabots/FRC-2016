@@ -8,15 +8,13 @@ import org.usfirst.frc.team2976.robot.OI;
 import org.usfirst.frc.team2976.robot.Robot;
 import org.usfirst.frc.team2976.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2976.robot.subsystems.GyroPIDSource;
-import org.usfirst.frc.team2976.robot.subsystems.HookMotor;
 import org.usfirst.frc.team2976.robot.subsystems.PIDMain;
 
 /**
  * @author JasmineCheng
  */
 public class AutoDriveStraight extends Command {
-	DriveTrain driveTrain = new DriveTrain();
-	public GyroPIDSource gyropidsource = new GyroPIDSource(); // Implements
+	private GyroPIDSource gyropidsource; // Implements
 																// PIDSource
 	/** Proportional gain */
 	double kp = 0.005;
@@ -31,7 +29,7 @@ public class AutoDriveStraight extends Command {
 
 	final int sampleTime = 100;
 
-	public PIDMain RobotAnglePID = new PIDMain(gyropidsource, robot_angle_setpoint, sampleTime, kp, ki, kd);
+	private PIDMain RobotAnglePID;
 	// PID controller for Motor 1
 
 	double speed;
@@ -43,6 +41,8 @@ public class AutoDriveStraight extends Command {
 		requires(Robot.drivetrain);
 		speed = mSpeed;
 		targetTime = mTime*1000;
+		gyropidsource = new GyroPIDSource();
+		RobotAnglePID = new PIDMain(gyropidsource, robot_angle_setpoint, sampleTime, kp, ki, kd);
 
 	}
 
@@ -85,10 +85,7 @@ public class AutoDriveStraight extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		DriveTrain.leftBackMotor.set(0);
-		DriveTrain.leftFrontMotor.set(0);
-		DriveTrain.rightBackMotor.set(0);
-		DriveTrain.rightFrontMotor.set(0);
+		Robot.drivetrain.setZero();
 	}
 
 	// Called when another command which requires one or more of the same

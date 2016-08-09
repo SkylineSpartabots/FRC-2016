@@ -4,13 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-//import org.usfirst.frc.team2976.robot.commands.AutoRaisePortcullis;
-import org.usfirst.frc.team2976.robot.commands.DriveStraight;
-import org.usfirst.frc.team2976.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2976.robot.commands.RaiseBackArm;
-import org.usfirst.frc.team2976.robot.commands.RaiseHook;
+import org.usfirst.frc.team2976.robot.commands.BackArmExtend;
+import org.usfirst.frc.team2976.robot.commands.BackArmRetract;
+import org.usfirst.frc.team2976.robot.commands.ClimberArmDown;
+import org.usfirst.frc.team2976.robot.commands.ClimberArmUp;
 import org.usfirst.frc.team2976.robot.commands.RaiseRobot;
-import org.usfirst.frc.team2976.robot.commands.RunRoller;
+import org.usfirst.frc.team2976.robot.commands.UnwindRaiseMotor;
 
 /**
  * @author NeilHazra
@@ -18,9 +17,6 @@ import org.usfirst.frc.team2976.robot.commands.RunRoller;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-
-	//public static final DriveStraight driveStraight = new DriveStraight();
-	
 	public enum Button {
 		RBumper(6), LBumper(5), A(1), B(2), X(3), Y(4), RightJoystickBtn(10), LeftJoystickBtn(9);
 
@@ -48,7 +44,12 @@ public class OI {
 	}
 	
 	public OI()	{
-		//(new JoystickButton(OI.driveStick, Button.RBumper.getBtnNumber())).whileHeld(driveStraight); //Start the DriveStraight Command when held
+		(new JoystickButton(OI.otherStick, Button.A.getBtnNumber())).whileHeld(new BackArmExtend());
+		(new JoystickButton(OI.otherStick, Button.B.getBtnNumber())).whileHeld(new BackArmRetract());
+		(new JoystickButton(OI.otherStick, Button.RBumper.getBtnNumber())).whileHeld(new RaiseRobot());
+		(new JoystickButton(OI.otherStick, Button.LBumper.getBtnNumber())).whileHeld(new UnwindRaiseMotor());
+		(new JoystickButton(OI.otherStick, Button.Y.getBtnNumber())).whenPressed(new ClimberArmUp());
+		(new JoystickButton(OI.otherStick, Button.X.getBtnNumber())).whenPressed(new ClimberArmDown());
 	}
 	
 	public static XBoxController driveStick = new XBoxController(0);
