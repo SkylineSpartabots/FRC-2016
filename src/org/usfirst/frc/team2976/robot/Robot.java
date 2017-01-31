@@ -15,10 +15,10 @@ import org.usfirst.frc.team2976.robot.subsystems.*;
  *         to call the functions corresponding to each mode, as described in the
  *         IterativeRobot documentation. If you change the name of this class or
  *         the package after creating this project, you must also update the
- *         manifest file in the resource directory.
+ *         manifest file in the resource directory. 
  */
 public class Robot extends IterativeRobot {
-	//Jasmine was here
+	
 	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	//public static final ArmDynamicSetpointPID armPID = new ArmDynamicSetpointPID();
 	//public static final DriveBOT DriveBot = new DriveBOT();
